@@ -15,8 +15,8 @@ export const Calculator: React.FC<CalculatorProps> = ({
     onClear,
     onEqual,
 }) => {
-    const digits = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', '.'];
-    const operators = ['+', '-', '*', '/'];
+    // Arrays removed as they were unused and causing build errors
+
 
     return (
         <div style={{

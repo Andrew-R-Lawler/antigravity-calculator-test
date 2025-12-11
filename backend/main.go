@@ -36,9 +36,10 @@ func main() {
 		c.Next()
 	})
 
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"message": "Calculator Backend is Running. Use POST /calculate endpoint."})
-	})
+	// Serve static files from the frontend build directory
+	r.Static("/assets", "../frontend/dist/assets")
+	r.StaticFile("/vite.svg", "../frontend/dist/vite.svg")
+	r.StaticFile("/", "../frontend/dist/index.html")
 
 	r.POST("/calculate", func(c *gin.Context) {
 		var req CalculatorRequest
@@ -48,7 +49,6 @@ func main() {
 		}
 
 		var result float64
-		var err error
 
 		switch req.Operator {
 		case "+":
@@ -65,11 +65,6 @@ func main() {
 			result = req.Num1 / req.Num2
 		default:
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid operator"})
-			return
-		}
-
-		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 
